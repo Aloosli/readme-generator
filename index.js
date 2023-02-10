@@ -81,8 +81,8 @@ ${answers.test}
 
 ${answers.license}
 
-`});
-   
+`;
+
 fs.writeFile('README.md', readme, (err) => {
     if (err) {
       if (err.code === 'EEXIST') {
@@ -93,4 +93,9 @@ fs.writeFile('README.md', readme, (err) => {
     }
     console.log('The README has been generated!');
   });
+
+
+});
+   
+
   
