@@ -1,4 +1,5 @@
-import('inquirer').then(inquirer => {
-    console.log("readme gen running"); 
-  });
+
+import inquirer from 'inquirer';
+console.log("readme gen running"); 
+
   
