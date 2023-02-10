@@ -1,0 +1,27 @@
+{
+  "name": "readme-generator",
+  "version": "1.0.0",
+  "description": "a simple cli tool to generate a README",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aloosli/readme-generator.git"
+  },
+  "keywords": [
+    "readme",
+    "generator"
+  ],
+  "author": "Aloosli",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Aloosli/readme-generator/issues"
+  },
+  "homepage": "https://github.com/Aloosli/readme-generator#readme",
+  "dependencies": {
+    "inquirer": "^9.1.4"
+  }
+}
