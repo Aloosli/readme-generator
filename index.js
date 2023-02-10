@@ -1,7 +1,6 @@
 
 import inquirer from 'inquirer';
 import fs from 'fs';
-console.log("readme gen running"); 
 
   
 const questions = [
@@ -17,7 +16,7 @@ const questions = [
     },
     {
         type: 'input',
-        name: 'table of contents',
+        name: 'tableOfContents',
         message: 'Please provide a table of contents for your project.'
     },
     {
@@ -48,10 +47,8 @@ const questions = [
     },
 ];
 
-inquirer
-    .prompt(questions)
-    .then((answers) => {
-        const readme = `# ${answers.title}
+const generateReadme = (answers) => {
+    return `# ${answers.title}
 
 ## Description
 
@@ -59,7 +56,7 @@ ${answers.description}
 
 ## Table of Contents
 
-${answers['table of contents']}
+${answers.tableOfContents}
 
 ## Usage
 
@@ -82,20 +79,20 @@ ${answers.test}
 ${answers.license}
 
 `;
+};
 
-fs.writeFile('README.md', readme, (err) => {
-    if (err) {
-      if (err.code === 'EEXIST') {
-        console.error('A README.md file already exists in this directory.');
-        return;
-      }
-      throw err;
-    }
-    console.log('The README has been generated!');
-  });
+const writeToFile = (fileName, data) => {
+    fs.writeFile(fileName, data, (err) => {
+        if (err) {
+            console.error(err);
+        }
+        console.log('The README has been generated!');
+    });
+};
 
-
-});
-   
-
-  
+inquirer
+    .prompt(questions)
+    .then((answers) => {
+        const readme = generateReadme(answers);
+        writeToFile('README.md', readme);
+    });
