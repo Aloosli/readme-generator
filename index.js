@@ -83,3 +83,14 @@ ${answers.license}
 
 `});
    
+fs.writeFile('README.md', readme, (err) => {
+    if (err) {
+      if (err.code === 'EEXIST') {
+        console.error('A README.md file already exists in this directory.');
+        return;
+      }
+      throw err;
+    }
+    console.log('The README has been generated!');
+  });
+  
