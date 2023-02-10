@@ -85,38 +85,65 @@ const questions = [
 ];
 
 const generateReadme = (answers) => {
-    return `# ${answers.title}
+    let readme = `# ${answers.title}
 
 ## Description
 
 ${answers.description}
 
-## Table of Contents
+`;
+
+    if (answers.includeTableOfContents) {
+        readme += `## Table of Contents
 
 ${answers.tableOfContents}
 
-## Usage
+`;
+    }
+
+    if (answers.includeUsage) {
+        readme += `## Usage
 
 ${answers.usage}
 
-## Installation
+`;
+    }
+
+    if (answers.includeInstallation) {
+        readme += `## Installation
 
 ${answers.installation}
 
-## Contribution
+`;
+    }
+
+    if (answers.includeContribution) {
+        readme += `## Contribution
 
 ${answers.contribution}
 
-## Test
+`;
+    }
+
+    if (answers.includeTest) {
+        readme += `## Test
 
 ${answers.test}
 
-## License
+`;
+    }
+
+    if (answers.includeLicense) {
+        readme += `## License
 
 ${answers.license}
 
 `;
+    }
+
+    return readme;
 };
+
 
 const writeToFile = (fileName, data) => {
     fs.writeFile(fileName, data, (err) => {

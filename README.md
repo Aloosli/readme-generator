@@ -2,27 +2,11 @@
 
 ## Description
 
-A simple README generator that uses node.js to generate a readme  file
-
-## Table of Contents
-
-undefined
+A simple README file generator using node.js
 
 ## Usage
 
-open your terminal and type node index.js
-
-## Installation
-
-undefined
-
-## Contribution
-
-undefined
-
-## Test
-
-undefined
+Open your terminal and type node index.js
 
 ## License
 
