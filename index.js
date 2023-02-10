@@ -19,7 +19,7 @@ const questions = [
         type: 'input',
         name: 'table of contents',
         message: 'Please provide a table of contents for your project.'
-    }
+    },
     {
 
         type: 'input',
@@ -46,5 +46,40 @@ const questions = [
         name: 'license',
         message: 'Please provide a license for your project.'
     },
-    
+];
+
+inquirer
+    .prompt(questions)
+    .then((answers) => {
+        const readme = `# ${answers.title}
+
+## Description
+
+${answers.description}
+
+## Table of Contents
+
+${answers['table of contents']}
+
+## Usage
+
+${answers.usage}
+
+## Installation
+
+${answers.installation}
+
+## Contribution
+
+${answers.contribution}
+
+## Test
+
+${answers.test}
+
+## License
+
+${answers.license}
+
+`});
    
