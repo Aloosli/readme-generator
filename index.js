@@ -85,6 +85,7 @@ const questions = [
     message: "Would you like to include a license?",
     default: true,
   },
+
   // list of licenses to choose from
   {
     type: "list",
@@ -98,6 +99,14 @@ const questions = [
       "Other (add your own)",
     ],
   },
+  {
+    type: "list",
+    name: "badgeColor",
+    message: "What color would you like the license badge to be?",
+    choices: ["brightgreen", "green", "yellowgreen", "yellow", "orange", "red", "blue", "lightgrey", "success", "important", "critical", "informational", "inactive"],
+    default: "brightgreen"
+  },
+
   // if user chooses "Other (add your own)", ask for the license
   {
     when: (answers) => answers.license === "Other (add your own)",
@@ -169,7 +178,7 @@ ${answers.description}
     readme += `## Table of Contents
 
 `;
-    tableOfContents.forEach((section) => {
+    tableOfContents.slice(1).forEach((section) => {
       readme += `- [${section.name}](${section.link})
 
 `;
@@ -214,7 +223,7 @@ ${answers.test}
 
   // add license section
   if (answers.license) {
-    const licenseNotice = generateLicenseNotice(answers.license);
+    const licenseNotice = generateLicenseNotice(answers.license, answers.badgeColor);
     readme += `## License
 
 ${licenseNotice}
@@ -242,14 +251,23 @@ ${licenseNotice}
 `;
   }
 
+  // add link to Table of Contents at the bottom of README
+  
+  if (answers.includeTableOfContents) {
+    readme += `Return to [Table of Contents](#table-of-contents)
+`;
+  }
+
+
   return readme;
 };
 
 // create a function to generate the license badge URL
-const generateLicenseBadge = (license) => {
+const generateLicenseBadge = (license, badgeColor) => {
   const slug = license.replace(" ", "_").toLowerCase();
-  return `https://img.shields.io/badge/license-${slug}-green`;
+  return `https://img.shields.io/badge/license-${slug}-${BadgeColor}.svg`;
 };
+
 
 // create a function to generate the license notice
 const generateLicenseNotice = (license) => {
@@ -280,6 +298,8 @@ const generateContactInstructions = (answers) => {
 // create a function to save the README
 
 const writeToFile = (fileName, data) => {
+  const licenseBadgeUrl = generateLicenseBadge(data.license, data.badgeColor || "brightgreen");
+  const content = generateReadme(data);
   fs.writeFile(fileName, data, (err) => {
     if (err) {
       console.error(err);
