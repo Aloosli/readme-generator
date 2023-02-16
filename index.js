@@ -166,14 +166,35 @@ ${answers.description}
   if (answers.includeTableOfContents) {
     readme += `## Table of Contents
 
-${answers.tableOfContents}
-
 `;
+    if (answers.includeInstallation) {
+      readme += `- [Installation](#installation)\n`;
+    }
+
+    if (answers.includeUsage) {
+      readme += `- [Usage](#usage)\n`;
+    }
+
+    if (answers.includeContribution) {
+      readme += `- [Contribution](#contribution)\n`;
+    }
+
+    if (answers.includeTest) {
+      readme += `- [Test](#test)\n`;
+    }
+
+    if (answers.license) {
+      readme += `- [License](#license)\n`;
+    }
+
+    readme += `- [Questions](#questions)\n`;
+
+    readme += `\n`;
   }
 
   // add installation section
   if (answers.includeInstallation) {
-    readme += `## Installation
+    readme += `## Installation <a name="installation"></a>
 
 ${answers.installation}
 
@@ -182,7 +203,7 @@ ${answers.installation}
 
   // add usage section
   if (answers.includeUsage) {
-    readme += `## Usage
+    readme += `## Usage <a name="usage"></a>
 
 ${answers.usage}
 
@@ -191,7 +212,7 @@ ${answers.usage}
 
   // add contribution section
   if (answers.includeContribution) {
-    readme += `## Contribution
+    readme += `## Contribution <a name="contribution"></a>
 
 ${answers.contribution}
 
@@ -200,7 +221,7 @@ ${answers.contribution}
 
   // add test section
   if (answers.includeTest) {
-    readme += `## Test
+    readme += `## Test <a name="test"></a>
 
 ${answers.test}
 
@@ -210,7 +231,7 @@ ${answers.test}
   // add license section
   if (answers.license) {
     const licenseNotice = generateLicenseNotice(answers.license);
-    readme += `## License
+    readme += `## License <a name="license"></a>
 
 ${licenseNotice}
 
@@ -239,6 +260,7 @@ ${licenseNotice}
 
   return readme;
 };
+
 
 // create a function to generate the license badge URL
 const generateLicenseBadge = (license) => {
