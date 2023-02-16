@@ -21,13 +21,7 @@ const questions = [
     message: "Would you like to include a table of contents?",
     default: true,
   },
-  // if user wants to include a table of contents, ask for the table of contents
-  {
-    when: (answers) => answers.includeTableOfContents,
-    type: "input",
-    name: "tableOfContents",
-    message: "Please provide a table of contents for your project.",
-  },
+
   // confirm if user wants to include usage information
   {
     type: "confirm",
@@ -164,37 +158,27 @@ ${answers.description}
 
   // add table of contents section
   if (answers.includeTableOfContents) {
+    const tableOfContents = [
+      { name: "Installation", link: "#installation" },
+      { name: "Usage", link: "#usage" },
+      { name: "Contribution", link: "#contribution" },
+      { name: "Test", link: "#test" },
+      { name: "License", link: "#license" },
+      { name: "Questions", link: "#questions" },
+    ];
     readme += `## Table of Contents
 
 `;
-    if (answers.includeInstallation) {
-      readme += `- [Installation](#installation)\n`;
-    }
+    tableOfContents.forEach((section) => {
+      readme += `- [${section.name}](${section.link})
 
-    if (answers.includeUsage) {
-      readme += `- [Usage](#usage)\n`;
-    }
-
-    if (answers.includeContribution) {
-      readme += `- [Contribution](#contribution)\n`;
-    }
-
-    if (answers.includeTest) {
-      readme += `- [Test](#test)\n`;
-    }
-
-    if (answers.license) {
-      readme += `- [License](#license)\n`;
-    }
-
-    readme += `- [Questions](#questions)\n`;
-
-    readme += `\n`;
+`;
+    });
   }
 
   // add installation section
   if (answers.includeInstallation) {
-    readme += `## Installation <a name="installation"></a>
+    readme += `## Installation
 
 ${answers.installation}
 
@@ -203,7 +187,7 @@ ${answers.installation}
 
   // add usage section
   if (answers.includeUsage) {
-    readme += `## Usage <a name="usage"></a>
+    readme += `## Usage
 
 ${answers.usage}
 
@@ -212,7 +196,7 @@ ${answers.usage}
 
   // add contribution section
   if (answers.includeContribution) {
-    readme += `## Contribution <a name="contribution"></a>
+    readme += `## Contribution
 
 ${answers.contribution}
 
@@ -221,7 +205,7 @@ ${answers.contribution}
 
   // add test section
   if (answers.includeTest) {
-    readme += `## Test <a name="test"></a>
+    readme += `## Test
 
 ${answers.test}
 
@@ -231,7 +215,7 @@ ${answers.test}
   // add license section
   if (answers.license) {
     const licenseNotice = generateLicenseNotice(answers.license);
-    readme += `## License <a name="license"></a>
+    readme += `## License
 
 ${licenseNotice}
 
@@ -260,7 +244,6 @@ ${licenseNotice}
 
   return readme;
 };
-
 
 // create a function to generate the license badge URL
 const generateLicenseBadge = (license) => {
