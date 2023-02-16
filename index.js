@@ -3,6 +3,7 @@ import inquirer from "inquirer";
 import fs from "fs";
 
 // create questions objects
+//--------------------------------------------
 const questions = [
   {
     type: "input",
@@ -96,7 +97,6 @@ const questions = [
       "GNU General Public License v3.0",
       "MIT License",
       "Unlicensed",
-      "Other (add your own)",
     ],
   },
   {
@@ -114,14 +114,6 @@ const questions = [
       "lightgrey",
     ],
     default: "brightgreen",
-  },
-
-  // if user chooses "Other (add your own)", ask for the license
-  {
-    when: (answers) => answers.license === "Other (add your own)",
-    type: "input",
-    name: "license",
-    message: "Please provide the license for your project.",
   },
 
   // confirm if the user wants to include their GitHub link
@@ -155,7 +147,7 @@ const questions = [
 ];
 // end of questions array
 //--------------------------------------------
-// create a function to generate the README
+// function to generate the README content based on user's answers
 const generateReadme = (answers) => {
   let readme = `# ${answers.title}
 
@@ -187,8 +179,13 @@ ${answers.description}
       { name: "Contribution", link: "#contribution" },
       { name: "Test", link: "#test" },
       { name: "License", link: "#license" },
-      { name: "Questions", link: "#questions" },
     ];
+
+    // Conditionally include "Questions" section in the table of contents
+    if (answers.includeGitHub || answers.includeEmail) {
+      tableOfContents.push({ name: "Questions", link: "#questions" });
+    }
+
     readme += `## Table of Contents
 
 `;
@@ -246,23 +243,26 @@ ${licenseNotice}
   }
 
   // add questions section
-  readme += `## Questions
+  if (answers.includeGitHub || answers.includeEmail) {
+    readme += `## Questions
 
 `;
 
-  // add email address
-  if (answers.includeEmail) {
-    const contactInstructions = generateContactInstructions(answers);
-    readme += `${contactInstructions}
+    // add email address
+    if (answers.includeEmail) {
+      const contactInstructions = generateContactInstructions(answers);
+      readme += `${contactInstructions}
 
 `;
-  }
-  // add GitHub username
-  if (answers.gitHubLink) {
-    const gitProfile = generateGitHubLink(answers.gitHubLink);
-    readme += `GitHub: [${answers.gitHubLink}](${gitProfile})
+    }
+
+    // add GitHub username
+    if (answers.includeGitHub) {
+      const gitProfile = generateGitHubLink(answers.gitHubLink);
+      readme += `GitHub: [${answers.gitHubLink}](${gitProfile})
 
 `;
+    }
   }
 
   // add link to Table of Contents at the bottom of README
@@ -275,14 +275,19 @@ ${licenseNotice}
   return readme;
 };
 
+
 // create a function to generate the license badge URL
+//--------------------------------------------
 const generateLicenseBadge = (license, badgeColor) => {
+  // replace spaces with underscores
   const slug = license.toLowerCase().replace(/ /g, "_");
 
+  // return the badge URL
   return `https://img.shields.io/badge/license-${slug}-${badgeColor}.svg`;
 };
 
 // create a function to generate the license notice
+//--------------------------------------------
 const generateLicenseNotice = (license) => {
   switch (license) {
     case "Apache License 2.0":
@@ -299,18 +304,19 @@ const generateLicenseNotice = (license) => {
 };
 
 // create a function to generate the GitHub profile URL
+//--------------------------------------------
 const generateGitHubLink = (username) => {
   return `https://github.com/${username}`;
 };
 
 // create a function to generate the contact instructions
+//--------------------------------------------
 const generateContactInstructions = (answers) => {
   return `To reach me with additional questions, please send an email to ${answers.email}.`;
 };
 
-// create a function to save the README
-
-// create a function to save the README
+// create a function to save the README to a file
+//--------------------------------------------
 const writeToFile = (fileName, answers) => {
   const content = generateReadme(answers);
   fs.writeFile(fileName, content, (err) => {
@@ -322,6 +328,7 @@ const writeToFile = (fileName, answers) => {
 };
 
 // call the inquirer module to prompt the user
+//--------------------------------------------
 inquirer.prompt(questions).then((answers) => {
   if (!answers.includeLicense) {
     answers.license = "";
