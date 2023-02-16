@@ -91,26 +91,78 @@ const questions = [
     message: "Would you like to include a license?",
     default: true,
   },
-  // if user wants to include a license, ask for the license
+  // list of licenses to choose from
   {
-    when: (answers) => answers.includeLicense,
+    type: "list",
+    name: "license",
+    message: "which license would you like to use?",
+    choices: [
+      "Apache License 2.0",
+      "GNU General Public License v3.0",
+      "MIT License",
+      "Unlicensed",
+      "Other (add your own)",
+    ],
+  },
+  // if user chooses "Other (add your own)", ask for the license
+  {
+    when: (answers) => answers.license === "Other (add your own)",
     type: "input",
     name: "license",
-    message: "Please provide a license for your project.",
+    message: "Please provide the license for your project.",
+  },
+
+  // confirm if the user wants to include their GitHub link
+  {
+    type: "confirm",
+    name: "includeGitHub",
+    message: "Would you like to include your GitHub Profile link?",
+    default: true,
+  },
+  // if user wants to include their GitHub link, ask for their GitHub profile link
+  {
+    when: (answers) => answers.includeGitHub,
+    type: "input",
+    name: "gitHubLink",
+    message: "Please provide your GitHub username.",
+  },
+  // confirm if the user wants to include their email address
+  {
+    type: "confirm",
+    name: "includeEmail",
+    message: "Would you like to include your email address?",
+    default: true,
+  },
+  // if user wants to include their email address, ask for their email address
+  {
+    when: (answers) => answers.includeEmail,
+    type: "input",
+    name: "email",
+    message: "Please provide your email address.",
   },
 ];
+
 // create a function to generate the README
 const generateReadme = (answers) => {
   let readme = `# ${answers.title}
 
-## Description
+`;
+  // add license badge
+  if (answers.license) {
+    const licenseBadgeUrl = generateLicenseBadge(answers.license);
+    readme += `![License](${licenseBadgeUrl})
+
+`;
+  }
+
+  // add description section
+  readme += `## Description
 
 ${answers.description}
 
 `;
 
-  // if statements to check if user wants to include a table of contents, usage information, installation instructions, contribution guidelines, test instructions, or a license
-
+  // add table of contents section
   if (answers.includeTableOfContents) {
     readme += `## Table of Contents
 
@@ -119,14 +171,7 @@ ${answers.tableOfContents}
 `;
   }
 
-  if (answers.includeUsage) {
-    readme += `## Usage
-
-${answers.usage}
-
-`;
-  }
-
+  // add installation section
   if (answers.includeInstallation) {
     readme += `## Installation
 
@@ -135,6 +180,16 @@ ${answers.installation}
 `;
   }
 
+  // add usage section
+  if (answers.includeUsage) {
+    readme += `## Usage
+
+${answers.usage}
+
+`;
+  }
+
+  // add contribution section
   if (answers.includeContribution) {
     readme += `## Contribution
 
@@ -143,6 +198,7 @@ ${answers.contribution}
 `;
   }
 
+  // add test section
   if (answers.includeTest) {
     readme += `## Test
 
@@ -151,17 +207,73 @@ ${answers.test}
 `;
   }
 
-  if (answers.includeLicense) {
+  // add license section
+  if (answers.license) {
+    const licenseNotice = generateLicenseNotice(answers.license);
     readme += `## License
 
-${answers.license}
+${licenseNotice}
+
+`;
+  }
+
+  // add questions section
+  readme += `## Questions
+
+`;
+
+  // add email address
+  if (answers.includeEmail) {
+    const contactInstructions = generateContactInstructions(answers);
+    readme += `${contactInstructions}
+
+`;
+  }
+  // add GitHub username
+  if (answers.gitHubLink) {
+    const gitProfile = generateGitHubLink(answers.gitHubLink);
+    readme += `GitHub: [${answers.gitHubLink}](${gitProfile})
 
 `;
   }
 
   return readme;
 };
+
+// create a function to generate the license badge URL
+const generateLicenseBadge = (license) => {
+  const slug = license.replace(" ", "_").toLowerCase();
+  return `https://img.shields.io/badge/license-${slug}-green`;
+};
+
+// create a function to generate the license notice
+const generateLicenseNotice = (license) => {
+  switch (license) {
+    case "Apache License 2.0":
+      return "This project is licensed under the Apache License 2.0.";
+    case "MIT License":
+      return "This project is licensed under the MIT License.";
+    case "GNU General Public License v3.0":
+      return "This project is licensed under the GNU General Public License v3.0.";
+    case "Unlicensed":
+      return "This project is in the public domain.";
+    default:
+      return `This project is licensed under the ${license}.`;
+  }
+};
+
+// create a function to generate the GitHub profile URL
+const generateGitHubLink = (username) => {
+  return `https://github.com/${username}`;
+};
+
+// create a function to generate the contact instructions
+const generateContactInstructions = (answers) => {
+  return `To reach me with additional questions, please send an email to ${answers.email}.`;
+};
+
 // create a function to save the README
+
 const writeToFile = (fileName, data) => {
   fs.writeFile(fileName, data, (err) => {
     if (err) {
@@ -170,6 +282,7 @@ const writeToFile = (fileName, data) => {
     console.log("The README has been generated!");
   });
 };
+
 // call the inquirer module to prompt the user
 inquirer.prompt(questions).then((answers) => {
   const readme = generateReadme(answers);

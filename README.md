@@ -1,14 +1,11 @@
-# Readme Generator
+# t
+
+![License](https://img.shields.io/badge/license-apache_license 2.0-green)
 
 ## Description
 
-A simple README file generator using node.js
-
-## Usage
-
-Open your terminal and type node index.js
+t
 
 ## License
 
-MIT
-
+## Questions
