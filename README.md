@@ -1,41 +1,29 @@
-# testblah
+# test
 
-![License](https://img.shields.io/badge/license-apache_license 2.0-green)
+![License](https://img.shields.io/badge/license-unlicensed-red.svg)
 
 ## Description
 
-bullshit
+test
 
 ## Table of Contents
 
-- [testblah](#testblah)
+- [test](#test)
   - [Description](#description)
   - [Table of Contents](#table-of-contents)
-  - [Installation](#installation)
-  - [Contribution](#contribution)
-  - [Test](#test)
+  - [Test](#test-1)
   - [License](#license)
   - [Questions](#questions)
 
-## Installation
-
-sdsd
-
-## Contribution
-
-dds
-
 ## Test
 
-dsd
+test it
 
 ## License
 
-This project is licensed under the Apache License 2.0.
+This project is in the public domain.
 
 ## Questions
-
-To reach me with additional questions, please send an email to psyadj@gmail.com.
 
 GitHub: [Aloosli](https://github.com/Aloosli)
 

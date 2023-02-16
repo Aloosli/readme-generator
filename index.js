@@ -103,8 +103,17 @@ const questions = [
     type: "list",
     name: "badgeColor",
     message: "What color would you like the license badge to be?",
-    choices: ["brightgreen", "green", "yellowgreen", "yellow", "orange", "red", "blue", "lightgrey", "success", "important", "critical", "informational", "inactive"],
-    default: "brightgreen"
+    choices: [
+      "brightgreen",
+      "green",
+      "yellowgreen",
+      "yellow",
+      "orange",
+      "red",
+      "blue",
+      "lightgrey",
+    ],
+    default: "brightgreen",
   },
 
   // if user chooses "Other (add your own)", ask for the license
@@ -144,7 +153,8 @@ const questions = [
     message: "Please provide your email address.",
   },
 ];
-
+// end of questions array
+//--------------------------------------------
 // create a function to generate the README
 const generateReadme = (answers) => {
   let readme = `# ${answers.title}
@@ -152,7 +162,11 @@ const generateReadme = (answers) => {
 `;
   // add license badge
   if (answers.license) {
-    const licenseBadgeUrl = generateLicenseBadge(answers.license);
+    const licenseNotice = generateLicenseNotice(answers.license);
+    const licenseBadgeUrl = generateLicenseBadge(
+      answers.license,
+      answers.badgeColor || "brightgreen"
+    );
     readme += `![License](${licenseBadgeUrl})
 
 `;
@@ -223,7 +237,7 @@ ${answers.test}
 
   // add license section
   if (answers.license) {
-    const licenseNotice = generateLicenseNotice(answers.license, answers.badgeColor);
+    const licenseNotice = generateLicenseNotice(answers.license);
     readme += `## License
 
 ${licenseNotice}
@@ -252,22 +266,21 @@ ${licenseNotice}
   }
 
   // add link to Table of Contents at the bottom of README
-  
+
   if (answers.includeTableOfContents) {
     readme += `Return to [Table of Contents](#table-of-contents)
 `;
   }
-
 
   return readme;
 };
 
 // create a function to generate the license badge URL
 const generateLicenseBadge = (license, badgeColor) => {
-  const slug = license.replace(" ", "_").toLowerCase();
-  return `https://img.shields.io/badge/license-${slug}-${BadgeColor}.svg`;
-};
+  const slug = license.toLowerCase().replace(/ /g, "_");
 
+  return `https://img.shields.io/badge/license-${slug}-${badgeColor}.svg`;
+};
 
 // create a function to generate the license notice
 const generateLicenseNotice = (license) => {
@@ -297,10 +310,10 @@ const generateContactInstructions = (answers) => {
 
 // create a function to save the README
 
-const writeToFile = (fileName, data) => {
-  const licenseBadgeUrl = generateLicenseBadge(data.license, data.badgeColor || "brightgreen");
-  const content = generateReadme(data);
-  fs.writeFile(fileName, data, (err) => {
+// create a function to save the README
+const writeToFile = (fileName, answers) => {
+  const content = generateReadme(answers);
+  fs.writeFile(fileName, content, (err) => {
     if (err) {
       console.error(err);
     }
@@ -310,6 +323,10 @@ const writeToFile = (fileName, data) => {
 
 // call the inquirer module to prompt the user
 inquirer.prompt(questions).then((answers) => {
+  if (!answers.includeLicense) {
+    answers.license = "";
+  }
+
   const readme = generateReadme(answers);
-  writeToFile("README.md", readme);
+  writeToFile("README.md", answers);
 });
