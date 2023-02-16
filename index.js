@@ -162,31 +162,36 @@ const questions = [
 // end of questions array
 //--------------------------------------------
 // function to generate the README content based on user's answers
-const generateReadme = (answers) => {
-  let readme = `# ${answers.title}
+//--------------------------------------------
+function generateReadme(answers) {
+  const {
+    title,
+    description,
+    license,
+    badgeColor,
+    gitHubLink,
+    email,
+    includeTableOfContents,
+    includeInstallation,
+    includeUsage,
+    includeContribution,
+    includeTest,
+    includeGitHub,
+    includeEmail,
+  } = answers;
 
-`;
-  // add license badge
-  if (answers.license) {
-    const licenseNotice = generateLicenseNotice(answers.license);
-    const licenseBadgeUrl = generateLicenseBadge(
-      answers.license,
-      answers.badgeColor || "brightgreen"
-    );
-    readme += `![License](${licenseBadgeUrl})
+  let readme = `# ${title}\n\n`;
 
-`;
+  if (license) {
+    readme += `![License](${generateLicenseBadge(
+      license,
+      badgeColor || "brightgreen"
+    )})\n\n`;
   }
 
-  // add description section
-  readme += `## Description
+  readme += `## Description\n\n${description}\n\n`;
 
-${answers.description}
-
-`;
-
-  // add table of contents section
-  if (answers.includeTableOfContents) {
+  if (includeTableOfContents) {
     const tableOfContents = [
       { name: "Installation", link: "#installation" },
       { name: "Usage", link: "#usage" },
@@ -195,99 +200,57 @@ ${answers.description}
       { name: "License", link: "#license" },
     ];
 
-    // Conditionally include "Questions" section in the table of contents
-    if (answers.includeGitHub || answers.includeEmail) {
+    if (includeGitHub || includeEmail) {
       tableOfContents.push({ name: "Questions", link: "#questions" });
     }
 
-    readme += `## Table of Contents
+    readme += `## Table of Contents\n\n`;
 
-`;
     tableOfContents.slice(1).forEach((section) => {
-      readme += `- [${section.name}](${section.link})
-
-`;
+      readme += `- [${section.name}](${section.link})\n\n`;
     });
   }
 
-  // add installation section
-  if (answers.includeInstallation) {
-    readme += `## Installation
-
-${answers.installation}
-
-`;
+  if (includeInstallation) {
+    readme += `## Installation\n\n${answers.installation}\n\n`;
   }
 
-  // add usage section
-  if (answers.includeUsage) {
-    readme += `## Usage
-
-${answers.usage}
-
-`;
+  if (includeUsage) {
+    readme += `## Usage\n\n${answers.usage}\n\n`;
   }
 
-  // add contribution section
-  if (answers.includeContribution) {
-    readme += `## Contribution
-
-${answers.contribution}
-
-`;
+  if (includeContribution) {
+    readme += `## Contribution\n\n${answers.contribution}\n\n`;
   }
 
-  // add test section
-  if (answers.includeTest) {
-    readme += `## Test
-
-${answers.test}
-
-`;
+  if (includeTest) {
+    readme += `## Test\n\n${answers.test}\n\n`;
   }
 
-  // add license section
-  if (answers.license) {
-    const licenseNotice = generateLicenseNotice(answers.license);
-    readme += `## License
-
-${licenseNotice}
-
-`;
+  if (license) {
+    readme += `## License\n\n${generateLicenseNotice(license)}\n\n`;
   }
 
-  // add questions section
-  if (answers.includeGitHub || answers.includeEmail) {
-    readme += `## Questions
+  if (includeGitHub || includeEmail) {
+    readme += `## Questions\n\n`;
 
-`;
-
-    // add email address
-    if (answers.includeEmail) {
-      const contactInstructions = generateContactInstructions(answers);
-      readme += `${contactInstructions}
-
-`;
+    if (includeEmail) {
+      readme += `${generateContactInstructions(email)}\n\n`;
     }
 
-    // add GitHub username
-    if (answers.includeGitHub) {
-      const gitProfile = generateGitHubLink(answers.gitHubLink);
-      readme += `GitHub: [${answers.gitHubLink}](${gitProfile})
-
-`;
+    if (includeGitHub) {
+      readme += `GitHub: [${gitHubLink}](${generateGitHubLink(
+        gitHubLink
+      )})\n\n`;
     }
   }
 
-  // add link to Table of Contents at the bottom of README
-
-  if (answers.includeTableOfContents) {
-    readme += `Return to [Table of Contents](#table-of-contents)
-`;
+  if (includeTableOfContents) {
+    readme += `Return to [Table of Contents](#table-of-contents)\n\n`;
   }
 
   return readme;
-};
+}
 
 // create a function to generate the license badge URL
 //--------------------------------------------
