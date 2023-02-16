@@ -9,11 +9,25 @@ const questions = [
     type: "input",
     name: "title",
     message: "What is the title of your project?",
+    validate: function (value) {
+      if (value.trim().length > 0) {
+        return true;
+      } else {
+        return "Please enter a  title.";
+      }
+    },
   },
   {
     type: "input",
     name: "description",
     message: "Please provide a description of your project.",
+    validate: function (value) {
+      if (value.trim().length > 0) {
+        return true;
+      } else {
+        return "Please enter a  description.";
+      }
+    },
   },
   // confirm if user wants to include a table of contents
   {
@@ -274,7 +288,6 @@ ${licenseNotice}
 
   return readme;
 };
-
 
 // create a function to generate the license badge URL
 //--------------------------------------------
