@@ -205,8 +205,8 @@ function generateReadme(answers) {
     tableOfContents.forEach((section) => {
       readme += `- [${section.name}](${section.link})\n\n`;
     });
-    
-  }
+}
+
 
   if (includeInstallation) {
     readme += `## Installation\n\n${answers.installation}\n\n`;
