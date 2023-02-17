@@ -1,37 +1,42 @@
-# Readme Generator
+# test apperino
 
-![License](https://img.shields.io/badge/license-mit_license-blue.svg)
+![License](https://img.shields.io/badge/license-apache_license_2.0-brightgreen.svg)
 
 ## Description
 
-A simple readme generator
+its bullshit, i hate it
 
 ## Table of Contents
 
-- [Readme Generator](#readme-generator)
+- [test apperino](#test-apperino)
   - [Description](#description)
   - [Table of Contents](#table-of-contents)
+  - [Installation](#installation)
   - [Usage](#usage)
   - [Contribution](#contribution)
   - [Test](#test)
   - [License](#license)
   - [Questions](#questions)
 
+## Installation
+
+install it please
+
 ## Usage
 
-type node index.js in terminal and watch the magic
+use it bro
 
 ## Contribution
 
-just do it
+help me
 
 ## Test
 
-just test it
+come on bro
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the Apache License 2.0.
 
 ## Questions
 

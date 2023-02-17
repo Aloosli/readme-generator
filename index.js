@@ -199,16 +199,13 @@ function generateReadme(answers) {
       { name: "Test", link: "#test" },
       { name: "License", link: "#license" },
     ];
-
-    if (includeGitHub || includeEmail) {
-      tableOfContents.push({ name: "Questions", link: "#questions" });
-    }
-
+    
     readme += `## Table of Contents\n\n`;
-
-    tableOfContents.slice(1).forEach((section) => {
+    
+    tableOfContents.forEach((section) => {
       readme += `- [${section.name}](${section.link})\n\n`;
     });
+    
   }
 
   if (includeInstallation) {
