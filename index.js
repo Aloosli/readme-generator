@@ -103,6 +103,7 @@ const questions = [
 
   // list of licenses to choose from
   {
+    when: (answers) => answers.includeLicense,
     type: "list",
     name: "license",
     message: "which license would you like to use?",
@@ -199,14 +200,13 @@ function generateReadme(answers) {
       { name: "Test", link: "#test" },
       { name: "License", link: "#license" },
     ];
-    
+
     readme += `## Table of Contents\n\n`;
-    
+
     tableOfContents.forEach((section) => {
       readme += `- [${section.name}](${section.link})\n\n`;
     });
-}
-
+  }
 
   if (includeInstallation) {
     readme += `## Installation\n\n${answers.installation}\n\n`;
@@ -232,7 +232,7 @@ function generateReadme(answers) {
     readme += `## Questions\n\n`;
 
     if (includeEmail) {
-      readme += `${generateContactInstructions(email)}\n\n`;
+      readme += `${generateContactInstructions(answers)}\n\n`;
     }
 
     if (includeGitHub) {
