@@ -193,13 +193,26 @@ function generateReadme(answers) {
   readme += `## Description\n\n${description}\n\n`;
 
   if (includeTableOfContents) {
-    const tableOfContents = [
-      { name: "Installation", link: "#installation" },
-      { name: "Usage", link: "#usage" },
-      { name: "Contribution", link: "#contribution" },
-      { name: "Test", link: "#test" },
-      { name: "License", link: "#license" },
-    ];
+    const tableOfContents = [];
+
+    if (includeInstallation) {
+      tableOfContents.push({ name: "Installation", link: "#installation" });
+    }
+    if (includeUsage) {
+      tableOfContents.push({ name: "Usage", link: "#usage" });
+    }
+    if (includeContribution) {
+      tableOfContents.push({ name: "Contribution", link: "#contribution" });
+    }
+    if (includeTest) {
+      tableOfContents.push({ name: "Test", link: "#test" });
+    }
+    if (license) {
+      tableOfContents.push({ name: "License", link: "#license" });
+    }
+    if (includeGitHub || includeEmail) {
+      tableOfContents.push({ name: "Questions", link: "#questions" });
+    }
 
     readme += `## Table of Contents\n\n`;
 
@@ -240,6 +253,8 @@ function generateReadme(answers) {
         gitHubLink
       )})\n\n`;
     }
+
+    readme += `---\n\n`;
   }
 
   if (includeTableOfContents) {
