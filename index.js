@@ -29,6 +29,7 @@ const questions = [
       }
     },
   },
+  // confirm if user wants to include a screenshot
   {
     type: "confirm",
     name: "includeScreenshot",
@@ -48,6 +49,7 @@ const questions = [
       }
     },
   },
+  // confirm if user wants to include a video
   {
     type: "confirm",
     name: "includeVideo",
@@ -58,7 +60,7 @@ const questions = [
     when: (answers) => answers.includeVideo,
     type: "input",
     name: "videoLink",
-    message: "Please provide a link to the video.",
+    message: "Please provide a Youtube link to the video.",
     validate: function (value) {
       if (value.trim().length > 0) {
         return true;
@@ -152,6 +154,7 @@ const questions = [
       "Unlicensed",
     ],
   },
+  // list of colors to choose from for the license badge
   {
     type: "list",
     name: "badgeColor",
@@ -203,12 +206,13 @@ const questions = [
 // function to generate the README content based on user's answers
 //--------------------------------------------
 function generateReadme(answers) {
+  // destructure the answers object
   const {
     title,
     description,
     includeScreenshot,
     includeVideo,
-    videoLink, 
+    videoLink,
     license,
     badgeColor,
     gitHubLink,
@@ -220,8 +224,9 @@ function generateReadme(answers) {
     includeGitHub,
     includeEmail,
   } = answers;
-
+  // initialize the readme variable
   let readme = `# ${title}\n\n`;
+  // if user wants to include a license, add the license badge
 
   if (license) {
     readme += `![License](${generateLicenseBadge(
@@ -229,18 +234,24 @@ function generateReadme(answers) {
       badgeColor || "brightgreen"
     )})\n\n`;
   }
+  // add the description
 
   readme += `## Description\n\n${description}\n\n`;
+  // add the screenshot 
 
   if (includeScreenshot) {
     readme += `## Screenshot\n\n`;
     readme += `![screenshot](${answers.screenshotLink})\n\n`;
   }
-  // update the Video section
+  // add the video
   if (includeVideo) {
     readme += `## Video\n\n`;
-    readme += `[![Demo Video](${generateVideoThumbnail(videoLink)})](${videoLink})\n\n`;
+    readme += `Click the video thumbnail to open it in a new tab.\n\n`;
+    readme += `[![Demo Video](${generateVideoThumbnail(
+      videoLink
+    )})](${videoLink})\n\n`;
   }
+  // add the table of contents
 
   if (includeTableOfContents) {
     const tableOfContents = [];
@@ -263,9 +274,11 @@ function generateReadme(answers) {
     if (includeGitHub || includeEmail) {
       tableOfContents.push({ name: "Questions", link: "#questions" });
     }
+    // add the table of contents to the readme
 
     readme += `## Table of Contents\n\n`;
-
+    
+    // loop through the table of contents array and add each section to the readme
     tableOfContents.forEach((section) => {
       readme += `- [${section.name}](${section.link})\n\n`;
     });
@@ -306,7 +319,7 @@ function generateReadme(answers) {
 
     readme += `---\n\n`;
   }
-
+  // add the return to table of contents link
   if (includeTableOfContents) {
     readme += `Return to [Table of Contents](#table-of-contents)\n\n`;
   }
@@ -361,9 +374,8 @@ function generateVideoThumbnail(videoLink) {
 function getVideoIdFromLink(videoLink) {
   const videoIdRegex = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^\s&]+)/;
   const matches = videoLink.match(videoIdRegex);
-  return matches ? matches[1] : '';
+  return matches ? matches[1] : "";
 }
-
 
 // create a function to save the README to a file
 //--------------------------------------------
@@ -383,7 +395,7 @@ inquirer.prompt(questions).then((answers) => {
   if (!answers.includeLicense) {
     answers.license = "";
   }
-
+  // call the writeToFile function to save the README
   const readme = generateReadme(answers);
   writeToFile("README.md", answers);
 });

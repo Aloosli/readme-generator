@@ -1,10 +1,10 @@
-# Readme Generator
+# Test
 
-![License](https://img.shields.io/badge/license-mit_license-orange.svg)
+![License](https://img.shields.io/badge/license-apache_license_2.0-brightgreen.svg)
 
 ## Description
 
-This is a command-line tool built with Node.js that generates a high-quality README file for your project, based on your answers.
+Test
 
 ## Screenshot
 
@@ -12,30 +12,40 @@ This is a command-line tool built with Node.js that generates a high-quality REA
 
 ## Video
 
-<iframe width="560" height="315" src="./assets/demo_video.mp4" frameborder="0" allowfullscreen></iframe>
+Click the video thumbnail to open it in a new tab.
+
+[![Demo Video](https://img.youtube.com/vi/HEGeP6fT8ow/maxresdefault.jpg)](https://youtu.be/HEGeP6fT8ow)
 
 ## Table of Contents
 
+- [Installation](#installation)
+
 - [Usage](#usage)
+
+- [Contribution](#contribution)
+
+- [Test](#test)
 
 - [License](#license)
 
-- [Questions](#questions)
+## Installation
+
+test
 
 ## Usage
 
-Open your terminal and type: node index.js
+test
+
+## Contribution
+
+test
+
+## Test
+
+test
 
 ## License
 
-This project is licensed under the MIT License.
-
-## Questions
-
-To reach me with additional questions, please send an email to lizzwizz@tuta.io.
-
-GitHub: [Aloosli](https://github.com/Aloosli)
-
----
+This project is licensed under the Apache License 2.0.
 
 Return to [Table of Contents](#table-of-contents)
