@@ -29,6 +29,25 @@ const questions = [
       }
     },
   },
+  {
+    type: "confirm",
+    name: "includeScreenshot",
+    message: "Would you like to include a screenshot?",
+    default: true,
+  },
+  {
+    when: (answers) => answers.includeScreenshot,
+    type: "input",
+    name: "screenshotLink",
+    message: "Please provide a link to the screenshot.",
+    validate: function (value) {
+      if (value.trim().length > 0) {
+        return true;
+      } else {
+        return "Please enter a valid link to the screenshot.";
+      }
+    },
+  },
   // confirm if user wants to include a table of contents
   {
     type: "confirm",
@@ -168,10 +187,10 @@ function generateReadme(answers) {
   const {
     title,
     description,
+    includeScreenshot,
     license,
     badgeColor,
     gitHubLink,
-    email,
     includeTableOfContents,
     includeInstallation,
     includeUsage,
@@ -191,6 +210,11 @@ function generateReadme(answers) {
   }
 
   readme += `## Description\n\n${description}\n\n`;
+
+  if (includeScreenshot) {
+    readme += `## Screenshot\n\n`;
+    readme += `![screenshot](${answers.screenshotLink})\n\n`;
+  }
 
   if (includeTableOfContents) {
     const tableOfContents = [];

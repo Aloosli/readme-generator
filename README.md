@@ -1,10 +1,14 @@
-# erer
+# Readme Generator
 
-![License](https://img.shields.io/badge/license-apache_license_2.0-brightgreen.svg)
+![License](https://img.shields.io/badge/license-mit_license-orange.svg)
 
 ## Description
 
-rere
+A simple README generator made using node.js
+
+## Screenshot
+
+![screenshot](./images/screenshot.png)
 
 ## Table of Contents
 
@@ -12,39 +16,27 @@ rere
 
 - [Usage](#usage)
 
-- [Contribution](#contribution)
-
-- [Test](#test)
-
 - [License](#license)
 
 - [Questions](#questions)
 
 ## Installation
 
-dssds
+n/a
 
 ## Usage
 
-rer
-
-## Contribution
-
-dsds
-
-## Test
-
-dsds
+open your terminal and type node index.js
 
 ## License
 
-This project is licensed under the Apache License 2.0.
+This project is licensed under the MIT License.
 
 ## Questions
 
-To reach me with additional questions, please send an email to sdsd.
+To reach me with additional questions, please send an email to lizzwizz@tuta.io.
 
-GitHub: [dssds](https://github.com/dssds)
+GitHub: [Aloosli](https://github.com/Aloosli)
 
 ---
 
