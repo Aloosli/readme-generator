@@ -48,6 +48,25 @@ const questions = [
       }
     },
   },
+  {
+    type: "confirm",
+    name: "includeVideo",
+    message: "Would you like to include a video?",
+    default: true,
+  },
+  {
+    when: (answers) => answers.includeVideo,
+    type: "input",
+    name: "videoLink",
+    message: "Please provide a link to the video.",
+    validate: function (value) {
+      if (value.trim().length > 0) {
+        return true;
+      } else {
+        return "Please enter a valid link to the video.";
+      }
+    },
+  },
   // confirm if user wants to include a table of contents
   {
     type: "confirm",
@@ -188,6 +207,8 @@ function generateReadme(answers) {
     title,
     description,
     includeScreenshot,
+    includeVideo,
+    videoLink, 
     license,
     badgeColor,
     gitHubLink,
@@ -214,6 +235,11 @@ function generateReadme(answers) {
   if (includeScreenshot) {
     readme += `## Screenshot\n\n`;
     readme += `![screenshot](${answers.screenshotLink})\n\n`;
+  }
+  // update the Video section
+  if (includeVideo) {
+    readme += `## Video\n\n`;
+    readme += `[![Demo Video](${generateVideoThumbnail(videoLink)})](${videoLink})\n\n`;
   }
 
   if (includeTableOfContents) {
@@ -326,6 +352,18 @@ const generateGitHubLink = (username) => {
 const generateContactInstructions = (answers) => {
   return `To reach me with additional questions, please send an email to ${answers.email}.`;
 };
+// create a function to generate the video thumbnail URL
+function generateVideoThumbnail(videoLink) {
+  const videoId = getVideoIdFromLink(videoLink);
+  return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+}
+// create a function to extract the video ID from the video link
+function getVideoIdFromLink(videoLink) {
+  const videoIdRegex = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^\s&]+)/;
+  const matches = videoLink.match(videoIdRegex);
+  return matches ? matches[1] : '';
+}
+
 
 // create a function to save the README to a file
 //--------------------------------------------

@@ -4,15 +4,17 @@
 
 ## Description
 
-A simple README generator made using node.js
+This is a command-line tool built with Node.js that generates a high-quality README file for your project, based on your answers.
 
 ## Screenshot
 
-![screenshot](./images/screenshot.png)
+![screenshot](./assets/screenshot.png)
+
+## Video
+
+<iframe width="560" height="315" src="./assets/demo_video.mp4" frameborder="0" allowfullscreen></iframe>
 
 ## Table of Contents
-
-- [Installation](#installation)
 
 - [Usage](#usage)
 
@@ -20,13 +22,9 @@ A simple README generator made using node.js
 
 - [Questions](#questions)
 
-## Installation
-
-n/a
-
 ## Usage
 
-open your terminal and type node index.js
+Open your terminal and type: node index.js
 
 ## License
 
