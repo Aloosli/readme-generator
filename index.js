@@ -366,36 +366,32 @@ const generateContactInstructions = (answers) => {
   return `To reach me with additional questions, please send an email to ${answers.email}.`;
 };
 // create a function to generate the video thumbnail URL
+//--------------------------------------------
 function generateVideoThumbnail(videoLink) {
   const videoId = getVideoIdFromLink(videoLink);
   return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 }
 // create a function to extract the video ID from the video link
+//--------------------------------------------
 function getVideoIdFromLink(videoLink) {
   const videoIdRegex = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^\s&]+)/;
   const matches = videoLink.match(videoIdRegex);
   return matches ? matches[1] : "";
 }
-
-// create a function to save the README to a file
-//--------------------------------------------
-const writeToFile = (fileName, answers) => {
-  const content = generateReadme(answers);
-  fs.writeFile(fileName, content, (err) => {
-    if (err) {
-      console.error(err);
-    }
-    console.log("The README has been generated!");
-  });
-};
-
-// call the inquirer module to prompt the user
+// create a function to initialize the application and save the readme file
 //--------------------------------------------
 inquirer.prompt(questions).then((answers) => {
   if (!answers.includeLicense) {
     answers.license = "";
   }
-  // call the writeToFile function to save the README
+  // generate the readme content
   const readme = generateReadme(answers);
-  writeToFile("README.md", answers);
+  // write the readme content to a file
+  fs.writeFile("README.md", readme, (err) => {
+    if (err) {
+      console.error(err);
+    }
+    console.log("The README has been generated!");
+  });
 });
+
